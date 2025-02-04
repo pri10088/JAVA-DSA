@@ -1,17 +1,17 @@
 class Solution {
     public boolean check(int[] nums) {
-        int count = 0;
         int n = nums.length;
-
-        for (int i = 0; i < n; i++) {
-            if (nums[i] > nums[(i + 1) % n]) {
-                count++;
+        int cnt =0;
+        for(int i=1; i< 2* n; i++){
+            if(nums[(i-1) % n] <= nums[i%n]){
+                cnt++;
+            }else{
+                cnt =1;
             }
-            if (count > 1) {
-                return false;
+            if(cnt == n){
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
 }
