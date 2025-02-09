@@ -1,18 +1,20 @@
 class Solution {
     public long countBadPairs(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        long totalPairs = (long) nums.length * (nums.length - 1) / 2;
+        Map<Integer, Integer> freq = new HashMap<>();
         long goodPairs = 0;
+        int n = nums.length;
 
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < n; i++) {
             int diff = i - nums[i];
-            if (map.containsKey(diff)) {
-                goodPairs += map.get(diff);
-            }
-            map.put(diff, map.getOrDefault(diff, 0) + 1);
+
+            // Count how many good pairs exist so far
+            goodPairs += freq.getOrDefault(diff, 0);
+
+            // Store the occurrence of the current difference
+            freq.put(diff, freq.getOrDefault(diff, 0) + 1);
         }
 
+        long totalPairs = (long) n * (n - 1) / 2;
         return totalPairs - goodPairs;
-        
     }
 }
