@@ -1,22 +1,18 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int count = 0;
-        int prefixSum = 0;
-        HashMap<Integer, Integer> sumMap = new HashMap<>();
-        sumMap.put(0, 1); // To handle the case when prefixSum itself is equal to k
+        int n = nums.length, cnt =0;
+        for(int i=0; i<n; i++){
+            int sum =0;
+            for(int j =i; j<n; j++){
+                sum+=nums[j];
 
-        for (int num : nums) {
-            prefixSum += num;
-
-            // Check if there is a prefix sum that makes (prefixSum - k) exist in map
-            if (sumMap.containsKey(prefixSum - k)) {
-                count += sumMap.get(prefixSum - k);
+                if(sum == k){
+                cnt++;
+            
             }
-
-            // Store prefixSum frequency in the HashMap
-            sumMap.put(prefixSum, sumMap.getOrDefault(prefixSum, 0) + 1);
+            
+            }
         }
-        
-        return count;
+        return cnt;
     }
 }
