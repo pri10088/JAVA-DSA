@@ -1,46 +1,40 @@
-
+import java.util.*;
 
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> ans = new ArrayList<>();
+        int top = 0, bottom = matrix.length - 1;
+        int left = 0, right = matrix[0].length - 1;
+        List<Integer> result = new ArrayList<>();
         
-        int n = matrix.length; // no. of rows
-        int m = matrix[0].length; // no. of columns
-        
-        // Initialize the pointers required for traversal.
-        int top = 0, left = 0, bottom = n - 1, right = m - 1;
-
-        // Loop until all elements are not traversed.
         while (top <= bottom && left <= right) {
-
-            // For moving left to right
-            for (int i = left; i <= right; i++)
-                ans.add(matrix[top][i]);
-
+            // Traverse from left to right
+            for (int i = left; i <= right; i++) {
+                result.add(matrix[top][i]);
+            }
             top++;
 
-            // For moving top to bottom.
-            for (int i = top; i <= bottom; i++)
-                ans.add(matrix[i][right]);
-
+            // Traverse from top to bottom
+            for (int i = top; i <= bottom; i++) {
+                result.add(matrix[i][right]);
+            }
             right--;
 
-            // For moving right to left.
+            // Traverse from right to left (only if there are remaining rows)
             if (top <= bottom) {
-                for (int i = right; i >= left; i--)
-                    ans.add(matrix[bottom][i]);
-
+                for (int i = right; i >= left; i--) {
+                    result.add(matrix[bottom][i]);
+                }
                 bottom--;
             }
 
-            // For moving bottom to top.
+            // Traverse from bottom to top (only if there are remaining columns)
             if (left <= right) {
-                for (int i = bottom; i >= top; i--)
-                    ans.add(matrix[i][left]);
-
+                for (int i = bottom; i >= top; i--) {
+                    result.add(matrix[i][left]);
+                }
                 left++;
             }
         }
-        return ans;
+        return result;
     }
 }
