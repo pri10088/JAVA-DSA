@@ -4,12 +4,14 @@ class Solution {
         for(int n : nums){
             set.add(n);
         }
-        int curNum =0;
-        int index =0, max=0;
+        
+         int max=0;
+         int curNum = 0;
+                int index = 0;
         for(int num : set){
             if(! set.contains(num - 1)){
                 curNum = num;
-                index = 1;
+                 index = 1;
 
                 while(set.contains(curNum + 1)){
                     curNum++;
