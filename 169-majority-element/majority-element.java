@@ -1,26 +1,17 @@
 class Solution {
     public int majorityElement(int[] nums) {
         int n = nums.length;
-        int cnt = 0; // count
-        int el = 0; // Element
-
-        //applying the algorithm:
-        for (int i = 0; i < n; i++) {
-            if (cnt == 0) {
-                cnt = 1;
-                el = nums[i];
-            } else if (el == nums[i]) cnt++;
-            else cnt--;
+        HashMap<Integer,Integer> mpp = new HashMap<>();
+        for(int i=0; i<n; i++){
+            int value = mpp.getOrDefault(nums[i],0);
+            mpp.put(nums[i], value + 1);
         }
-
-        //checking if the stored element
-        // is the majority element:
-        int cnt1 = 0;
-        for (int i = 0; i < n; i++) {
-            if (nums[i] == el) cnt1++;
+        for(int key : mpp.keySet()){
+            if(mpp.get(key) > n/2){
+                return key;
+            }
         }
-
-        if (cnt1 > (n / 2)) return el;
         return -1;
+
     }
 }
