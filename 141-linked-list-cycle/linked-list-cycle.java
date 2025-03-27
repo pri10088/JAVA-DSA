@@ -13,7 +13,10 @@ public class Solution {
     public boolean hasCycle(ListNode head) {
         HashMap<ListNode, Integer> mpp = new HashMap<>();
         ListNode temp = head;
-        while( temp != null){
+        if(head == null || head.next == null){
+            return false;
+        }
+        while(temp != null){
             if(mpp.containsKey(temp)){
                 return true;
             }
@@ -21,6 +24,7 @@ public class Solution {
             temp = temp.next;
         }
         return false;
+        
         
     }
 }
