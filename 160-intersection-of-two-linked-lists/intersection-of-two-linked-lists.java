@@ -11,20 +11,17 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-          if (headA == null || headB == null) return null;
-        ListNode temp1 = headA;
-        ListNode temp2 = headB;
-        HashMap<ListNode, Integer> mpp = new HashMap<>();
-        while(temp1 != null){
-            mpp.put(temp1, 1);
-            temp1 = temp1.next;
+
+        ListNode t1 = headA;
+        ListNode t2 = headB;
+        while( t1 != t2){
+            t1 = (t1 == null) ? headB : t1.next;
+            t2 = (t2 == null) ? headA : t2.next;
         }
-        while(temp2 != null){
-            if(mpp.containsKey(temp2)){
-                return temp2;
-            }
-            temp2 = temp2.next;
-        }
-        return null;
+
+        return t2;
+
+
+        
     }
 }
