@@ -7,7 +7,7 @@ class Solution {
             cur+=nums[i];
 
         }
-        int result = req-cur;
-        return result;
+        return req-cur;
+        
     }
 }
