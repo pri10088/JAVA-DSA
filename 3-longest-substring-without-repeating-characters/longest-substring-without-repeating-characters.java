@@ -5,13 +5,14 @@ class Solution {
         int[] hash = new int[256];
         Arrays.fill(hash, -1);
         while(r<n){
-            if(hash[s.charAt(r)] != -1 && hash[s.charAt(r)] >= l){
-                l = hash[s.charAt(r)]+1;
+            char ch = s.charAt(r);
+            if(hash[ch] != -1 && hash[ch] >= l){
+                l = hash[ch]+1;
 
             }
             int len = r - l+1;
             max = Math.max(max, len);
-            hash[s.charAt(r)] = r;
+            hash[ch] = r;
             r++;
 
 
