@@ -1,15 +1,19 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int minPrice = Integer.MAX_VALUE; // Track the minimum price seen so far
-        int maxProfit = 0; // Track the maximum profit
+        int n = prices.length;
+        int minPrice = Integer.MAX_VALUE;
+        int maxP = 0;
+        for(int price : prices){
+            if(minPrice > price){
+                minPrice = price;
+            }else{
+                maxP = Math.max(maxP, price - minPrice);
 
-        for (int price : prices) {
-            if (price < minPrice) {
-                minPrice = price; // Update minPrice if a new lower price is found
-            } else {
-                maxProfit = Math.max(maxProfit, price - minPrice); // Calculate max profit
             }
+           
+            
         }
-        return maxProfit;
+         return maxP;
+        
     }
 }
