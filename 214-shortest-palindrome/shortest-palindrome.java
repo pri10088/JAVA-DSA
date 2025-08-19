@@ -1,31 +1,62 @@
 class Solution {
     public String shortestPalindrome(String s) {
-        String rev = new StringBuilder(s).reverse().toString();
-        String combined = s + "#" + rev;
+        // form a new string for lps array calc
+        String newStr = s + '#' + reverse(s);
 
-        int[] lps = computeLPS(combined);
+        // get the longest palindrome length
+        int[] lps = calculate(newStr);
+        int longestLen = lps[lps.length - 1];
 
-        // longest palindrome prefix length
-        int len = lps[lps.length - 1];
+        // leftover + original string
+        StringBuilder sb = new StringBuilder();
+        String leftOver = s.substring(longestLen);
+        sb.append(reverse(leftOver)).append(s);
 
-        // add the remaining suffix of rev in front of s
-        return rev.substring(0, s.length() - len) + s;
+        return sb.toString();
     }
 
-    private int[] computeLPS(String str) {
-        int n = str.length();
+    public static int[] calculate(String pat) {
+        int n = pat.length();
         int[] lps = new int[n];
-        int j = 0; // length of current matching prefix
 
-        for (int i = 1; i < n; i++) {
-            while (j > 0 && str.charAt(i) != str.charAt(j)) {
-                j = lps[j - 1]; // fallback
+        int j = 0, i = 1;
+        while (i < n) {
+            // match
+            if (pat.charAt(j) == pat.charAt(i)) {
+                lps[i] = j + 1;
+                j++; i++;
             }
-            if (str.charAt(i) == str.charAt(j)) {
-                j++;
+
+            // not-match
+            else {
+                // j didn't move yet
+                if (j == 0) {
+                    // put zero & inc i
+                    lps[i] = 0;
+                    i++;
+                }
+
+                // j had moved to right
+                else {
+                    // move j to prev char index lps
+                    j = lps[j - 1];
+                }
             }
-            lps[i] = j;
         }
+
         return lps;
+    }
+
+    public String reverse(String s) {
+        int n = s.length();
+
+        char[] str = s.toCharArray();
+        for (int i = 0; i < n / 2; i++) {
+            char temp = str[i];
+            str[i] = str[n - i - 1];
+            str[n - i - 1] = temp;
+        }
+
+        return new String(str);
     }
 }
