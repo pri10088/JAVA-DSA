@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Solution { // Rename to "Solution"
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums); // Step 1: Sort the array
@@ -34,17 +32,5 @@ public class Solution { // Rename to "Solution"
             }
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        
-        int[] nums1 = {1, 0, -1, 0, -2, 2};
-        int target1 = 0;
-        System.out.println(solution.fourSum(nums1, target1)); // Output: [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
-
-        int[] nums2 = {2, 2, 2, 2, 2};
-        int target2 = 8;
-        System.out.println(solution.fourSum(nums2, target2)); // Output: [[2, 2, 2, 2]]
     }
 }
