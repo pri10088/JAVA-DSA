@@ -1,19 +1,32 @@
-// Java
-import java.util.Stack;
-
 class StockSpanner {
-    private Stack<int[]> stack;
+        Stack<Pair> st;
+        int index;
 
     public StockSpanner() {
-        stack = new Stack<>();
+        st = new Stack<>();
+        index = -1;
     }
-
+    
     public int next(int price) {
-        int span = 1;
-        while (!stack.isEmpty() && stack.peek()[0] <= price) {
-            span += stack.pop()[1]; // Add popped span
+        index = index +1;
+        while(!st.empty() && st.peek().price <= price){
+            st.pop();
         }
-        stack.push(new int[]{price, span}); // Store price and span
-        return span;
+        int ans = index - (st.empty() ? -1 : st.peek().ind);
+        st.push(new Pair(price, index));
+        return ans;
     }
 }
+class Pair{
+    int price, ind;
+    Pair(int price, int ind){
+        this.price = price;
+        this.ind = ind;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
