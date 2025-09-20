@@ -1,23 +1,27 @@
+import java.util.*;
+
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<String>();
-        recurse(res, 0, 0, "", n);
-        return res;
+        List<String> result = new ArrayList<>();
+        char[] current = new char[2 * n]; // preallocate char array
+        backtrack(result, current, 0, 0, n, 0);
+        return result;
     }
-    
-    public void recurse(List<String> res, int left, int right, String s, int n) {
-        if (s.length() == n * 2) {
-            res.add(s);
+
+    private void backtrack(List<String> result, char[] current, int open, int close, int n, int pos) {
+        if (pos == current.length) {
+            result.add(new String(current)); // convert to string once
             return;
         }
-        
-        if (left < n) {
-            recurse(res, left + 1, right, s + "(", n);
+
+        if (open < n) { // add '(' if possible
+            current[pos] = '(';
+            backtrack(result, current, open + 1, close, n, pos + 1);
         }
-        
-        if (right < left) {
-            recurse(res, left, right + 1, s + ")", n);
+
+        if (close < open) { // add ')' if valid
+            current[pos] = ')';
+            backtrack(result, current, open, close + 1, n, pos + 1);
         }
     }
-	// See above tree diagram with parameters (left, right, s) for better understanding
 }
