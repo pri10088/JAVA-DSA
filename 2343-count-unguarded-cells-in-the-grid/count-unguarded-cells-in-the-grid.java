@@ -1,32 +1,65 @@
 class Solution {
     public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
+        int EMPTY = 0, GUARD = 1, WALL = 2, GUARDED = 3;
         int[][] grid = new int[m][n];
-        
-        // 1 -> guard, 2 -> wall
-        for (int[] g : guards) grid[g[0]][g[1]] = 1;
-        for (int[] w : walls) grid[w[0]][w[1]] = 2;
+        for (int[] g : guards) grid[g[0]][g[1]] = GUARD;
+        for (int[] w : walls)  grid[w[0]][w[1]] = WALL;
 
-        // Directions: up, down, left, right
-        int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
-        
-        // Mark guarded cells
-        for (int[] g : guards) {
-            for (int[] d : dirs) {
-                int r = g[0] + d[0];
-                int c = g[1] + d[1];
-                while (r >= 0 && r < m && c >= 0 && c < n && grid[r][c] != 1 && grid[r][c] != 2) {
-                    if (grid[r][c] == 0) grid[r][c] = 3; // mark guarded
-                    r += d[0];
-                    c += d[1];
+        // Row sweeps
+        for (int i = 0; i < m; i++) {
+            boolean seenGuard = false;
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == GUARD) {
+                    seenGuard = true;
+                } else if (grid[i][j] == WALL) {
+                    seenGuard = false;
+                } else if (seenGuard) {
+                    grid[i][j] = GUARDED;
+                }
+            }
+            seenGuard = false;
+            for (int j = n - 1; j >= 0; j--) {
+                if (grid[i][j] == GUARD) {
+                    seenGuard = true;
+                } else if (grid[i][j] == WALL) {
+                    seenGuard = false;
+                } else if (seenGuard) {
+                    grid[i][j] = GUARDED;
                 }
             }
         }
 
-        // Count unguarded empty cells (0)
+        // Column sweeps
+        for (int j = 0; j < n; j++) {
+            boolean seenGuard = false;
+            for (int i = 0; i < m; i++) {
+                if (grid[i][j] == GUARD) {
+                    seenGuard = true;
+                } else if (grid[i][j] == WALL) {
+                    seenGuard = false;
+                } else if (seenGuard) {
+                    grid[i][j] = GUARDED;
+                }
+            }
+            seenGuard = false;
+            for (int i = m - 1; i >= 0; i--) {
+                if (grid[i][j] == GUARD) {
+                    seenGuard = true;
+                } else if (grid[i][j] == WALL) {
+                    seenGuard = false;
+                } else if (seenGuard) {
+                    grid[i][j] = GUARDED;
+                }
+            }
+        }
+
+        // Count unguarded & empty
         int count = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 0) count++;
+                if (grid[i][j] == EMPTY) {
+                    count++;
+                }
             }
         }
         return count;
